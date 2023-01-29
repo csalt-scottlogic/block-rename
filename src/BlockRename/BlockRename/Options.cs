@@ -9,4 +9,7 @@ public class Options
 
     [Option('b', "base", Required = true, HelpText = "File name prefix.")]
     public string? NameBase { get; set; }
+
+    [Option('s', "start", Required = false, Default = 0, HelpText = "Starting counter.")]
+    public int StartingCount { get; set; }
 }

@@ -26,7 +26,7 @@ internal class Program
 
         List<string> inputFiles = GetInputFiles(options.Folder).ToList();
         inputFiles.Sort();
-        List<string> outputFiles = MangleAndCheckNames(inputFiles, options.NameBase);
+        List<string> outputFiles = MangleAndCheckNames(inputFiles, options.NameBase, options.StartingCount);
         if (!outputFiles.Any())
         {
             return;
@@ -52,9 +52,9 @@ internal class Program
         }
     }
 
-    private static List<string> MangleAndCheckNames(IList<string> inputFiles, string newBaseName)
+    private static List<string> MangleAndCheckNames(IList<string> inputFiles, string newBaseName, int startingCount)
     {
-        List<string> outputFiles = inputFiles.Select((n, i) => Path.Combine(Path.GetDirectoryName(n) ?? "", Path.ChangeExtension($"{newBaseName}_{i,4:D4}", Path.GetExtension(n)))).ToList();
+        List<string> outputFiles = inputFiles.Select((n, i) => Path.Combine(Path.GetDirectoryName(n) ?? "", Path.ChangeExtension($"{newBaseName}_{i + startingCount,4:D4}", Path.GetExtension(n)))).ToList();
         for (int i = 0; i < outputFiles.Count; i++)
         {
             if (inputFiles.Skip(i).Contains(outputFiles[i]))
